@@ -28,6 +28,7 @@ namespace LogicielNettoyagePc
         string Version = "1.0.0";
         public DirectoryInfo winTemp;
         public DirectoryInfo appTemp;
+        string SavePath = Directory.GetCurrentDirectory() + "\\";
       
         public MainWindow()
         {
@@ -37,7 +38,7 @@ namespace LogicielNettoyagePc
             checkActu();
             UpToDate.Content += " " + Version;
             getDate();
-
+            
 
         }
 
@@ -203,18 +204,23 @@ namespace LogicielNettoyagePc
         // Sauvegarde la date dans le fichier Date.txt
         public void SaveDate()
         {
+            
             string Date = DateTime.Now.ToString("Le dd/MM/yyyy à HH") + "h" + DateTime.Now.ToString("mm");
-            File.WriteAllText("Date.txt", Date);
+            File.WriteAllText(SavePath + "Date.txt", Date);
         }
 
         
         public void getDate()
         {
-            string LastDate = File.ReadAllText("Date.txt");
+            if(File.Exists(SavePath + "Date.txt" ))
+            {
+            string LastDate = File.ReadAllText(SavePath + "Date.txt");
             if(LastDate != string.Empty)
             {
                 Date.Content = LastDate;
             }
+            }
+
         }
     }
 }
